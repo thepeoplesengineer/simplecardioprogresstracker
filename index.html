@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardio Exercise Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="min-h-screen flex flex-col">
+    <header>
+        <h1><img src="images\webHeader.png" alt="A stylized header saying Cardio Goal and Exercise Tracker"></h1>
+    </header>
+    <main>
+        <section id="stepOne" class="flex flex-col items-center col-span-1">
+            <h2 class="mb-4"><img src="images/saveyourgoal.png" alt="A stylized banner to highlight setting your goals"></h2>
+            <form id="goalForm" class=" pb-8 max-w-sm">
+                <div class="mb-4">
+                    <label for="currentWeight" class="block text-gray-700 text-sm font-bold mb-2">Current Weight:</label>
+                    <input type="text" id="currentWeight" name="currentWeight" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="frequency" class="block text-gray-700 text-sm font-bold mb-2">How many times do you want to do cardio a week?</label>
+                    <input type="number" id="frequency" name="frequency" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="weightLoss" class="block text-gray-700 text-sm font-bold mb-2">How much weight (lbs) do you want to lose in a month?</label>
+                    <input type="number" id="weightLoss" name="weightLoss" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="flex items-center justify-center">
+                    <input type="submit" value="Submit" id="submitBtn" class="bg-black hover:bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                </div>
+            </form>
+        </section>
+        <section id="savedModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Your entry has been saved</p>
+
+            </div>
+        </section>
+        <section class="flex flex-col items-center col-span-1">
+            <h2 class="mb-4"><img src="images/tracksessions.png" alt="A stylized banner to highlight tracking your sessions"></h2>
+            <form id="trackForm" class="w-full max-w-sm flex flex-col space-y-4 pb-8">
+                <div>
+                    <label for="exerciseType" class="block text-gray-700 text-sm font-bold mb-2">Exercise Type:</label>
+                    <select id="exerciseType" name="exerciseType" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="running">Running</option>
+                        <option value="cycling">Cycling</option>
+                        <option value="swimming">Swimming</option>
+                        <option value="walking">Walking</option>
+                        <option value="walkingfast">Power Walking</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="duration" class="block text-gray-700 text-sm font-bold mb-2">Duration in Minutes:</label>
+                    <input type="number" id="duration" name="duration" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                </div>
+                <div class="flex items-center justify-center">
+                    <input type="submit" value="Submit" id="submitBtn" class="bg-black hover:bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                </div>
+            </form>
+        </section>
+        <section class="flex flex-col items-center col-span-1">
+            <h2 class="mb-4"><img src="images/seeresultsimage.png" alt="A stylized banner to highlight seeing your results"></h2>
+            <div class=" pb-8 w-full max-w-sm mx-auto flex flex-col space-y-4">
+                <button id="btnProgress" class= "bg-green-500 hover:bg-pink-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Analyze your progress!</button>
+            </div>
+        </section>
+
+        <div id="chartModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <canvas id="viewChart"></canvas>
+                <button id="viewCalendar">View Calendar</button>
+            </div>
+        </div>
+        <div id="calendarModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="calendar"></div>
+            </div>
+        </div>
+
+    </main>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
