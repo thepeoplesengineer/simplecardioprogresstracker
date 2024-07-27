@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cardio Exercise Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -14,10 +14,10 @@
     <header>
         <h1><img src="images\webHeader.png" alt="A stylized header saying Cardio Goal and Exercise Tracker"></h1>
     </header>
-    <main>
+    <main class="bg-gradient-to-r from-purple-500 to-pink-500 ">
         <section id="stepOne" class="flex flex-col items-center col-span-1">
             <h2 class="mb-4"><img src="images/saveyourgoal.png" alt="A stylized banner to highlight setting your goals"></h2>
-            <form id="goalForm" class=" pb-8 max-w-sm">
+            <form id="goalForm" class="pb-8 max-w-sm"  >
                 <div class="mb-4">
                     <label for="currentWeight" class="block text-gray-700 text-sm font-bold mb-2">Current Weight:</label>
                     <input type="text" id="currentWeight" name="currentWeight" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
@@ -73,25 +73,22 @@
             </div>
         </section>
 
-        <div id="chartModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <canvas id="viewChart"></canvas>
-                <button id="viewCalendar">View Calendar</button>
+        <div id="chartModal" class="modal fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+            <div class="modal-content bg-white p-4 rounded shadow-lg max-w-4xl w-full">
+                <span class="close cursor-pointer text-right block mb-4">&times;</span>
+                <div id="goalInfo" class="text-center text-gray-800 mb-4"></div>
+                <canvas id="viewChart" class="mb-4"></canvas>
             </div>
         </div>
-        <div id="calendarModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <div id="calendar"></div>
-            </div>
-        </div>
+        
 
     </main>
 
 
+    
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/main.min.js"></script>
+    
     <script src="js/script.js"></script>
 </body>
 

@@ -19,6 +19,11 @@
     max-width: 500px;
 }
 
+#calendar {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+}
 .btnwindow, .btnProgress {
     display: inline-block;
     padding: 10px 20px; /* Top/bottom padding and left/right padding */
