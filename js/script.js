@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function () {
     setupGoalForm();
     setupTrackForm();
     setupProgressButton();
-    
 });
 
 function setupModals() {
@@ -16,9 +15,9 @@ function setupModals() {
 
     spans.forEach(span => {
         span.onclick = function () {
-            savedModal.style.display = "none";
-            chartModal.style.display = "none";
-            calendarModal.style.display = "none";
+            if (savedModal) savedModal.style.display = "none";
+            if (chartModal) chartModal.style.display = "none";
+            if (calendarModal) calendarModal.style.display = "none";
         }
     });
 
@@ -35,74 +34,76 @@ function setupModals() {
 
 function entrySaved() {
     var savedModal = document.getElementById("savedModal");
-    savedModal.style.display = "block";
+    if (savedModal) savedModal.style.display = "block";
 }
-
-
 
 function setupGoalForm() {
     const goalForm = document.querySelector('#goalForm');
-    goalForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    if (goalForm) {
+        goalForm.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        const currentWeight = document.querySelector('#currentWeight').value;
-        const frequency = document.querySelector('#frequency').value;
-        const weightLoss = document.querySelector('#weightLoss').value;
+            const currentWeight = document.querySelector('#currentWeight').value;
+            const frequency = document.querySelector('#frequency').value;
+            const weightLoss = document.querySelector('#weightLoss').value;
 
-        const goals = {
-            currentWeight: parseFloat(currentWeight),
-            frequency: parseInt(frequency),
-            weightLoss: parseFloat(weightLoss)
-        };
+            const goals = {
+                currentWeight: parseFloat(currentWeight),
+                frequency: parseInt(frequency),
+                weightLoss: parseFloat(weightLoss)
+            };
 
-        localStorage.setItem('fitnessGoals', JSON.stringify(goals));
+            localStorage.setItem('fitnessGoals', JSON.stringify(goals));
 
-        entrySaved();
-        const results = calculateCaloriesAndWeightLoss(); // Calculate calories burned and weight loss after adding a new entry
-        
-        // Assign returned values to global variables
-        mostRecentCaloriesBurnedGlobal = results.mostRecentCaloriesBurned;
-        totalCaloriesBurnedGlobal = results.totalCaloriesBurned;
-        totalWeightLossGlobal = results.totalWeightLoss;
+            entrySaved();
+            const results = calculateCaloriesAndWeightLoss(); // Calculate calories burned and weight loss after adding a new entry
 
-        console.log(`Most Recent Calories Burned: ${mostRecentCaloriesBurnedGlobal}`);
-        console.log(`Total Calories Burned: ${totalCaloriesBurnedGlobal}`);
-        console.log(`Total Weight Loss: ${totalWeightLossGlobal} lbs`);
-    });
+            // Assign returned values to global variables
+            mostRecentCaloriesBurnedGlobal = results.mostRecentCaloriesBurned;
+            totalCaloriesBurnedGlobal = results.totalCaloriesBurned;
+            totalWeightLossGlobal = results.totalWeightLoss;
+
+            console.log(`Most Recent Calories Burned: ${mostRecentCaloriesBurnedGlobal}`);
+            console.log(`Total Calories Burned: ${totalCaloriesBurnedGlobal}`);
+            console.log(`Total Weight Loss: ${totalWeightLossGlobal} lbs`);
+        });
+    }
 }
 
 function setupTrackForm() {
     const trackForm = document.querySelector('#trackForm');
-    trackForm.addEventListener('submit', function (e) {
-        e.preventDefault();
+    if (trackForm) {
+        trackForm.addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        const exerciseType = document.querySelector('#exerciseType').value;
-        const duration = document.querySelector('#duration').value;
+            const exerciseType = document.querySelector('#exerciseType').value;
+            const duration = document.querySelector('#duration').value;
 
-        const newSession = {
-            exerciseType: exerciseType,
-            duration: parseInt(duration),
-            date: new Date().toISOString()
-        };
-        let entries = JSON.parse(localStorage.getItem('exerciseEntries')) || [];
-        entries.push(newSession);
-        localStorage.setItem('exerciseEntries', JSON.stringify(entries));
+            const newSession = {
+                exerciseType: exerciseType,
+                duration: parseInt(duration),
+                date: new Date().toISOString()
+            };
+            let entries = JSON.parse(localStorage.getItem('exerciseEntries')) || [];
+            entries.push(newSession);
+            localStorage.setItem('exerciseEntries', JSON.stringify(entries));
 
-        entrySaved();
-        const caloriesBurned = calculateCaloriesBurned();
-        
-    });
+            entrySaved();
+            const caloriesBurned = calculateCaloriesBurned();
+        });
+    }
 }
 
 function setupProgressButton() {
     const btnProgress = document.querySelector('#btnProgress');
     const chartModal = document.querySelector('#chartModal');
-    btnProgress.addEventListener('click', function (e) {
-        e.preventDefault();
-        showGoalAndChartModal();
-    });
+    if (btnProgress && chartModal) {
+        btnProgress.addEventListener('click', function (e) {
+            e.preventDefault();
+            showGoalAndChartModal();
+        });
+    }
 }
-
 
 function renderChart() {
     const ctx = document.getElementById('viewChart').getContext('2d');
@@ -146,12 +147,10 @@ function renderChart() {
         }
     });
 }
+
 function calculateCaloriesBurned() {
     const fitnessGoals = JSON.parse(localStorage.getItem('fitnessGoals'));
-    
-
-    const exerciseEntries = JSON.parse(localStorage.getItem('exerciseEntries'));
-    
+    const exerciseEntries = JSON.parse(localStorage.getItem('exerciseEntries')) || [];
 
     const MET_VALUES = {
         running: 9.8,
@@ -194,33 +193,22 @@ function calculateCaloriesBurned() {
         totalWeightLoss
     };
 }
-function getMostRecentEntryDate() {
-    // Retrieve the exercise entries from local storage
-    const exerciseEntries = JSON.parse(localStorage.getItem('exerciseEntries')) || [];
-    
-    // Sort the entries by date in descending order
-    exerciseEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
-    // Get the date of the most recent entry
-    const mostRecentEntryDate = new Date(exerciseEntries[0].date);
 
+function getMostRecentEntryDate() {
+    const exerciseEntries = JSON.parse(localStorage.getItem('exerciseEntries')) || [];
+    exerciseEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const mostRecentEntryDate = new Date(exerciseEntries[0].date);
     return mostRecentEntryDate;
 }
 
-const mostRecentDate = getMostRecentEntryDate();
-if (mostRecentDate) {
-    console.log(`The most recent entry date is: ${mostRecentDate}`);
-}
 function countEntriesInWeek(mostRecentDate) {
     const exerciseEntries = JSON.parse(localStorage.getItem('exerciseEntries')) || [];
 
-    // Create method to get a week's range
     const startOfWeek = new Date(mostRecentDate);
-    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Start of the week (Sunday)
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
     const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 6); // End of the week (Saturday)
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
 
-    // Filter entries within the week range
     const entriesInWeek = exerciseEntries.filter(entry => {
         const entryDate = new Date(entry.date);
         return entryDate >= startOfWeek && entryDate <= endOfWeek;
@@ -229,7 +217,6 @@ function countEntriesInWeek(mostRecentDate) {
     console.log(`You have worked out ${entriesInWeek.length} times this week`);
     return entriesInWeek.length;
 }
-const entriesThisWeek = countEntriesInWeek(mostRecentDate)
 
 function showGoalAndChartModal() {
     var chartModal = document.getElementById("chartModal");
@@ -253,7 +240,7 @@ function showGoalAndChartModal() {
             <p class="text-lg text-gray-700 mb-4">You wanted to workout <strong class="font-bold">${frequency}</strong> times a week.</p>
             <h1 class="text-3xl font-extrabold mt-6 mb-4 text-gray-800">Your Progress:</h1>
             <p class="text-lg text-gray-700 mb-2">Your most recent workout you burned <strong class="font-bold">${mostRecentCaloriesBurned}</strong> calories.</p>
-            <p class="text-lg text-gray-700 mb-2">You have burned <strong class="font-bold">${totalCaloriesBurned}</strong> calories in total using this tracker application.</p>
+            <p class="text-lg text-gray-700 mb-2">You burned <strong class="font-bold">${totalCaloriesBurned}</strong> calories in total using this tracker application.</p>
             <p class="text-lg text-gray-700">This has resulted in a weight loss of <strong class="font-bold">${totalWeightLoss}</strong> lbs.</p>
             <p class="text-lg text-gray-700">You have worked out a total of <strong class="font-bold">${entriesThisWeek}</strong> times this week!</p>
         </div>
