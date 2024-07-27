@@ -240,7 +240,7 @@ function showGoalAndChartModal() {
             <p class="text-lg text-gray-700 mb-4">You wanted to workout <strong class="font-bold">${frequency}</strong> times a week.</p>
             <h1 class="text-3xl font-extrabold mt-6 mb-4 text-gray-800">Your Progress:</h1>
             <p class="text-lg text-gray-700 mb-2">Your most recent workout you burned <strong class="font-bold">${mostRecentCaloriesBurned}</strong> calories.</p>
-            <p class="text-lg text-gray-700 mb-2">You have burned <strong class="font-bold">${totalCaloriesBurned}</strong> calories in total using this tracker application.</p>
+            <p class="text-lg text-gray-700 mb-2">You burned <strong class="font-bold">${totalCaloriesBurned}</strong> calories in total using this tracker application.</p>
             <p class="text-lg text-gray-700">This has resulted in a weight loss of <strong class="font-bold">${totalWeightLoss}</strong> lbs.</p>
             <p class="text-lg text-gray-700">You have worked out a total of <strong class="font-bold">${entriesThisWeek}</strong> times this week!</p>
         </div>
