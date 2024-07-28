@@ -17,7 +17,7 @@ function setupModals() {
         span.onclick = function () {
             if (savedModal) savedModal.style.display = "none";
             if (chartModal) chartModal.style.display = "none";
-            if (calendarModal) calendarModal.style.display = "none";
+
         }
     });
 
@@ -26,8 +26,6 @@ function setupModals() {
             savedModal.style.display = "none";
         } else if (event.target === chartModal) {
             chartModal.style.display = "none";
-        } else if (event.target === calendarModal) {
-            calendarModal.style.display = "none";
         }
     }
 }
