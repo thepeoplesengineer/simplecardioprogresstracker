@@ -1,39 +1,10 @@
-let myChart; // Add this at the top of your script to keep track of the chart instance
-
+let myChart; // Allows for multiple charts on same day submissions
 document.addEventListener("DOMContentLoaded", function () {
-    setupModals();
     setupGoalForm();
     setupTrackForm();
+    setupModals();
     setupProgressButton();
 });
-
-function setupModals() {
-    var savedModal = document.getElementById("savedModal");
-    var chartModal = document.getElementById("chartModal");
-    var calendarModal = document.getElementById("calendarModal");
-    var spans = document.querySelectorAll(".close");
-
-    spans.forEach(span => {
-        span.onclick = function () {
-            if (savedModal) savedModal.style.display = "none";
-            if (chartModal) chartModal.style.display = "none";
-
-        }
-    });
-
-    window.onclick = function (event) {
-        if (event.target === savedModal) {
-            savedModal.style.display = "none";
-        } else if (event.target === chartModal) {
-            chartModal.style.display = "none";
-        }
-    }
-}
-
-function entrySaved() {
-    var savedModal = document.getElementById("savedModal");
-    if (savedModal) savedModal.style.display = "block";
-}
 
 function setupGoalForm() {
     const goalForm = document.querySelector('#goalForm');
@@ -54,16 +25,7 @@ function setupGoalForm() {
             localStorage.setItem('fitnessGoals', JSON.stringify(goals));
 
             entrySaved();
-            const results = calculateCaloriesAndWeightLoss(); // Calculate calories burned and weight loss after adding a new entry
-
-            // Assign returned values to global variables
-            mostRecentCaloriesBurnedGlobal = results.mostRecentCaloriesBurned;
-            totalCaloriesBurnedGlobal = results.totalCaloriesBurned;
-            totalWeightLossGlobal = results.totalWeightLoss;
-
-            console.log(`Most Recent Calories Burned: ${mostRecentCaloriesBurnedGlobal}`);
-            console.log(`Total Calories Burned: ${totalCaloriesBurnedGlobal}`);
-            console.log(`Total Weight Loss: ${totalWeightLossGlobal} lbs`);
+            
         });
     }
 }
@@ -87,9 +49,36 @@ function setupTrackForm() {
             localStorage.setItem('exerciseEntries', JSON.stringify(entries));
 
             entrySaved();
-            const caloriesBurned = calculateCaloriesBurned();
+            
         });
     }
+}
+
+function setupModals() {
+    var savedModal = document.getElementById("savedModal");
+    var chartModal = document.getElementById("chartModal");
+    var spans = document.querySelectorAll(".close");
+
+    spans.forEach(span => {
+        span.onclick = function () {
+            if (savedModal) savedModal.style.display = "none";
+            if (chartModal) chartModal.style.display = "none";
+
+        }
+    });
+
+    window.onclick = function (event) {
+        if (event.target === savedModal) {
+            savedModal.style.display = "none";
+        } else if (event.target === chartModal) {
+            chartModal.style.display = "none";
+        }
+    }
+}
+
+function entrySaved() {
+    var savedModal = document.getElementById("savedModal");
+    if (savedModal) savedModal.style.display = "block";
 }
 
 function setupProgressButton() {
@@ -120,7 +109,7 @@ function renderChart() {
         }
     });
 
-    // Destroy existing chart instance if it exists
+
     if (myChart) {
         myChart.destroy();
     }
@@ -212,7 +201,7 @@ function countEntriesInWeek(mostRecentDate) {
         return entryDate >= startOfWeek && entryDate <= endOfWeek;
     });
 
-    console.log(`You have worked out ${entriesInWeek.length} times this week`);
+    //console.log(`You have worked out ${entriesInWeek.length} times this week`);
     return entriesInWeek.length;
 }
 
