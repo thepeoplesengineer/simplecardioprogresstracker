@@ -18,7 +18,7 @@ For this application, the formulas needed were far more important that the UI. T
 ## Installation
 
 You just need a web browser and go to 
-to access the application. The application is formatted to all devices.
+link to access the application. The application is formatted to all devices.
 
 https://thepeoplesengineer.github.io/simplecardioprogresstracker/
 
